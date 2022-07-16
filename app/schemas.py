@@ -64,3 +64,15 @@ class TokenData(BaseModel):
 class Vote(BaseModel):
     post_id: int
     dir: conint(le=1)
+
+class Comment(BaseModel):
+    user_id: int
+    post_id: int
+    comment_text: str
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+
