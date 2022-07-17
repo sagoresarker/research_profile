@@ -6,8 +6,8 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP
 from .database import Base
 
 
-class research(Base):
-    __tablename__ = "research"
+class Post(Base):
+    __tablename__ = "posts"
 
     id = Column(Integer, primary_key=True, nullable=False)
     title = Column(String, nullable=False)
@@ -19,6 +19,7 @@ class research(Base):
         "users.id", ondelete="CASCADE"), nullable=False)
 
     owner = relationship("User")
+    post_comment = relationship("Comment", back_populates="post_related")
 
 
 class User(Base):
@@ -26,7 +27,6 @@ class User(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
-    scholar_id = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
 
@@ -37,15 +37,19 @@ class Vote(Base):
         "users.id", ondelete="CASCADE"), primary_key=True)
     post_id = Column(Integer, ForeignKey(
         "posts.id", ondelete="CASCADE"), primary_key=True)
-    direction = Column(Integer, nullable=False)
+
 
 class Comment(Base):
-    __tablename__ = "comment"
-    comment_text = Column(String, nullable=False)
-    user_id = Column(Integer, ForeignKey(
-        "users.id", ondelete="CASCADE"), primary_key=True)
-    post_id = Column(Integer, ForeignKey(
-        "posts.id", ondelete="CASCADE"), primary_key=True)
+
+    __tablename__ ="comments"
+
+    id = Column(Integer,primary_key=True)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
-    
+    is_active = Column(Boolean,default=True)
+    name = Column(String)
+    email = Column(String, nullable=False, unique=True)
+    body= Column(String)
+    post_id = Column(Integer,ForeignKey("posts.id"))
+
+    post_related = relationship("Post" , back_populates="post_comment")
