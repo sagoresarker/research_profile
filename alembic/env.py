@@ -11,7 +11,7 @@ from app.config import settings
 # access to the values within the .ini file in use.
 config = context.config
 config.set_main_option(
-    "sqlalchemy.url", 'postgresql+psycopg2://postgres:sagore@localhost:5432/researchpro')
+    "sqlalchemy.url", 'postgresql://postgres:sagore@localhost/research_profile')
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

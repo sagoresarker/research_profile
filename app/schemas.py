@@ -48,7 +48,7 @@ class UserCreate(BaseModel):
 
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    username: EmailStr
     password: str
 
 
@@ -65,14 +65,17 @@ class Vote(BaseModel):
     post_id: int
     dir: conint(le=1)
 
-class Comment(BaseModel):
-    user_id: int
-    post_id: int
-    comment_text: str
-    created_at: datetime
+class CommentBase(BaseModel):
+    name:str
+    body:str
+    email:str
+
+class CommentList(CommentBase):
+    id: int
+    post_id:int
+    created_date: datetime
 
     class Config:
-        orm_mode = True
-
+        orm_mode= True
 
 
