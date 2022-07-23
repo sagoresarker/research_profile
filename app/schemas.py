@@ -63,11 +63,11 @@ class TokenData(BaseModel):
 
 class Vote(BaseModel):
     post_id: int
-    dir: conint(le=1)
+    dir: conint(le=2)
 
 class CommentBase(BaseModel):
     name:str
-    body:str
+    comment:str
     email:str
 
 class CommentList(CommentBase):

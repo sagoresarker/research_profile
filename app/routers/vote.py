@@ -28,7 +28,8 @@ def vote(vote: schemas.Vote, db: Session = Depends(database.get_db), current_use
         new_vote = models.Vote(post_id=vote.post_id, user_id=current_user.id)
         db.add(new_vote)
         db.commit()
-        return {"message": "successfully added vote"}
+        return {"message": "successfully Upvoted"}
+
     else:
         if not found_vote:
             raise HTTPException(
